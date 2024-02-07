@@ -1,0 +1,86 @@
+1) Numero totale degli ordini,
+
+	SELECT sum(Quantity) as TotaleProdottiOrdinati
+	FROM [northwind].[dbo].[Order Details]
+
+2) Numero totale di clienti,
+
+	CLIENTI DISTINTI
+	SELECT COUNT(DISTINCT CustomerID) as NumeroClienti
+	FROM [dbo].[Orders]
+	
+	CLIENTI TOTALI (NON DISTINTI)
+	SELECT COUNT(CustomerID) as NumeroClienti
+	FROM [dbo].[Orders]
+
+3) Numero totale di clienti che abitano a Londra,
+	
+	CLIENTI DISTINTI
+	SELECT COUNT(DISTINCT CustomerID) as NumeroClientiLondra
+	FROM [dbo].[Orders]
+	WHERE ShipCity = 'london'
+
+	CLIENTI TOTALI (NON DISTINTI)
+	SELECT COUNT(DISTINCT CustomerID) as NumeroClientiLondra
+	FROM [dbo].[Orders]
+	WHERE ShipCity = 'london'
+
+4) La media aritmetica del costo del trasporto di tutti gli ordini effettuati
+
+	SELECT AVG(Freight) as MediaSpedizioni
+	FROM [dbo].[Orders]
+
+5) La media aritmetica del costo del trasporto dei soli ordini effettuati dal cliente "BOTTM"
+
+	SELECT AVG(Freight) as MediaSpedizioni
+	FROM [dbo].[Orders]
+	WHERE CustomerID = 'BOTTM'
+
+6) Totale delle spese di trasporto effettuate raggruppate per id cliente
+
+	SELECT CustomerID, SUM(Freight) as SpeseSpedizioneTotali
+	FROM [dbo].[Orders]
+	GROUP BY CustomerID
+
+7) Numero totale di clienti raggruppati per città di appartenenza
+
+	CLIENTI DISTINTI
+	SELECT ShipCity, COUNT(DISTINCT CustomerID) as NumeroClienti
+	FROM [dbo].[Orders]
+	GROUP BY ShipCity
+
+	CLIENTI TOTALI(NON DISTINTI)
+	SELECT ShipCity, COUNT(CustomerID) as NumeroClienti
+	FROM [dbo].[Orders]
+	GROUP BY ShipCity
+
+8) Totale di UnitPrice * Quantity raggruppato per ogni ordine
+
+	SELECT OrderID, SUM((UnitPrice*Quantity)) as UnitPriceXQuantity
+	FROM [northwind].[dbo].[Order Details]
+	GROUP BY OrderID
+
+9) Totale di UnitPrice * Quantity solo dell'ordine con id=10248
+
+	SELECT OrderID, SUM((UnitPrice*Quantity)) as UnitPriceXQuantity
+	FROM [northwind].[dbo].[Order Details]
+	GROUP BY OrderID
+	HAVING OrderID= '10248'
+
+10) Numero di prodotti censiti per ogni categoria
+
+	SELECT Count(*), CategoryID
+	FROM [northwind].[dbo].[Products]
+	GROUP BY CategoryID
+
+11) Numero totale di ordini raggruppati per paese di spedizione (ShipCountry)
+
+	SELECT ShipCountry, COUNT(OrderID) as NumeroOrdiniCountry
+	FROM [dbo].[Orders]
+	GROUP BY ShipCountry
+
+12) La media del costo del trasporto raggruppati per paese di spedizione (ShipCountry)
+
+	SELECT ShipCountry, AVG(Freight) as MediaCostiSpedizioneNazione
+	FROM [dbo].[Orders]
+	GROUP BY ShipCountry
